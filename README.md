@@ -1,4 +1,4 @@
-
+Download the extension form the realeases section or visit url :"https://github.com/slash-jay/makeiteasy/releases/tag/v1.0.0"
 **Title:**    MAKE IT EASY(chrome Extension)
 
 **Overview:**
