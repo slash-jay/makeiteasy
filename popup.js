@@ -24,12 +24,13 @@ function insertImage(src) {
   img.style.maxWidth = '100%';
 
   const range = document.getSelection().getRangeAt(0);
+  range.deleteContents(); // Clear any selected content
   range.insertNode(img);
-  range.collapse(false);
 
   // Ensure cursor moves after the image
   const br = document.createElement('br');
   range.insertNode(br);
+  range.collapse(false);
   document.getSelection().removeAllRanges();
   document.getSelection().addRange(range);
 }
@@ -58,3 +59,24 @@ function downloadNotepad() {
 }
 
 loadNotepad(); // Load state on popup open
+
+// Handle paste events to manage cursor and content
+document.getElementById('noteContent').addEventListener('paste', (event) => {
+  event.preventDefault(); // Prevent default paste behavior
+
+  const items = event.clipboardData.items;
+  for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+
+      if (item.kind === 'file' && item.type.startsWith('image/')) {
+          const blob = item.getAsFile();
+          const url = URL.createObjectURL(blob);
+
+          insertImage(url); // Insert the image
+          URL.revokeObjectURL(url); // Clean up the object URL
+      } else {
+          const text = event.clipboardData.getData('text/plain');
+          document.execCommand('insertText', false, text); // Insert text
+      }
+  }
+});

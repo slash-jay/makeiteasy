@@ -3,17 +3,321 @@
 <head>
     <title>Student Helper Extension</title>
     <link rel="stylesheet" type="text/css" href="notepad.css">
+    <style>
+        
+.glowing-btn {
+  position: relative;
+  color: var(--glow-color);
+  cursor: pointer;
+  padding: 0.35em 1em;
+  border: 0.15em solid var(--glow-color);
+  border-radius: 0.45em;
+  background: none;
+  perspective: 2em;
+  font-family: "Raleway", sans-serif;
+  font-size: 2em;
+  font-weight: 900;
+  letter-spacing: 1em;
+
+  -webkit-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  -moz-box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  box-shadow: inset 0px 0px 0.5em 0px var(--glow-color),
+    0px 0px 0.5em 0px var(--glow-color);
+  animation: border-flicker 2s linear infinite;
+}
+
+.glowing-txt {
+  float: left;
+  margin-right: -0.8em;
+  -webkit-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em var(--glow-color);
+  -moz-text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+    0 0 0.45em var(--glow-color);
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em var(--glow-color);
+  animation: text-flicker 3s linear infinite;
+}
+
+.faulty-letter {
+  opacity: 0.5;
+  animation: faulty-flicker 2s linear infinite;
+}
+
+.glowing-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.7;
+  filter: blur(1em);
+  transform: translateY(120%) rotateX(95deg) scale(1, 0.35);
+  background: var(--glow-color);
+  pointer-events: none;
+}
+
+.glowing-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: -1;
+  background-color: var(--glow-color);
+  box-shadow: 0 0 2em 0.2em var(--glow-color);
+  transition: opacity 100ms linear;
+}
+
+.glowing-btn:hover {
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: none;
+  animation: none;
+}
+
+.glowing-btn:hover .glowing-txt {
+  animation: none;
+  /* color: #00fcff; */
+}
+
+.glowing-btn:hover .faulty-letter {
+  animation: none;
+  text-shadow: none;
+  /* color: #00fcff; */
+  opacity: 1;
+}
+
+.glowing-btn:hover:before {
+  filter: blur(1.5em);
+  /* color: #00fcff; */
+  opacity: 1;
+}
+
+.glowing-btn:hover:after {
+  opacity: 1;
+  /* color: #00fcff; */
+}
+
+@keyframes faulty-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 0.1;
+  }
+  4% {
+    opacity: 0.5;
+  }
+  19% {
+    opacity: 0.5;
+  }
+  21% {
+    opacity: 0.1;
+  }
+  23% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  83% {
+    opacity: 0.4;
+  }
+
+  87% {
+    opacity: 1;
+  }
+}
+
+@keyframes text-flicker {
+  0% {
+    opacity: 0.1;
+  }
+
+  2% {
+    opacity: 1;
+  }
+
+  8% {
+    opacity: 0.1;
+  }
+
+  9% {
+    opacity: 1;
+  }
+
+  12% {
+    opacity: 0.1;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+  72% {
+    opacity: 0.2;
+  }
+
+  77% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes border-flicker {
+  0% {
+    opacity: 0.1;
+  }
+  2% {
+    opacity: 1;
+  }
+  4% {
+    opacity: 0.1;
+  }
+
+  8% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 6000px) {
+  .glowing-btn{
+    font-size: 1em;
+    /* color: #00fcff; */
+  }
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* color: #00fcff; */
+}
+.info {
+  margin: 20px 0;
+  text-align: center;
+  /* color: #00fcff; */
+}
+
+p {
+  color: #00fcff;
+  margin-bottom: 20px;
+}
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: #0e0e0e; /* Dark background for hacker theme */
+            color: #33ff33; /* Neon green text for hacker theme */
+            background-image: url('https://www.transparenttextures.com/patterns/dark-squares.png');
+            background-size: cover;
+        }
+
+        #notepad {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker background for notepad */
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #33ff33; /* Neon green glow for the title */
+            letter-spacing: 2px;
+            animation: blink 2s step-start infinite;
+        }
+
+        @keyframes blink {
+            0% { color: #5ff45f; }
+           100% { color: #0ce30c; }
+        }
+        #noteContent {
+            height: 200px;
+            border: 1px solid #33ff33; /* Neon green border */
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #1e1e1e; /* Dark background for content area */
+            color: #33ff33; /* Neon green text */
+            outline: none;
+            overflow-y: auto;
+            resize: vertical; /* Allow vertical resizing */
+            font-family: monospace; /* Hacker-themed font */
+            white-space: pre-wrap; /* Preserve formatting */
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #33ff33; /* Neon green border for buttons */
+            border-radius: 5px;
+            background-color: #0e0e0e; /* Dark button background */
+            color: #33ff33; /* Neon green text */
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 10px 0;
+        }
+
+        .btn:hover {
+            background-color: #33ff33; /* Neon green background on hover */
+            color: #0e0e0e; /* Dark text on hover */
+            transform: scale(1.05); /* Slightly increase size on hover */
+            box-shadow: 0 8px 15px rgba(0, 255, 0, 0.5); /* Green shadow effect on hover */
+        }
+
+        .btn:active {
+            transform: scale(0.95); /* Slightly decrease size on click */
+            background-color: #1e1e1e; /* Darker color on click */
+        }
+
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
     <div id="notepad">
-      <h1 >Make it easy</h1>
-
-        <div contenteditable="true" id="noteContent" ></div>
-        <button  class="btn" id="captureBtn">Add Screenshot</button>
-        <button class="btn" id="saveBtn">Save Notepad</button>
-        <button class="btn" id="downloadBtn">Download Notepad</button>
-        <button  class="btn" id="resetBtn">Reset</button>
+        <button class='glowing-btn'><span class='glowing-txt'>Make<span class='faulty-letter'>itEa</span>sy</span></button>
+   
+        <div contenteditable="true" id="noteContent"></div>
+        <div class="btn-container">
+            <button class="btn" id="captureBtn">Add Screenshot</button>
+            <button class="btn" id="saveBtn">Save Notepad</button>
+            <button class="btn" id="downloadBtn">Download Notepad</button>
+            <button class="btn" id="resetBtn">Reset</button>
+        </div>
     </div>
+
     <script src="popup.js"></script>
 </body>
 </html>
